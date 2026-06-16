@@ -1081,7 +1081,7 @@ async def handle_mini_file(msg: Message, state: FSMContext) -> None:
 #  MAIN
 # ─────────────────────────────────────────────────────────────────────────────
 
-async def main() -> None:
+#async def main() -> None:
 async def main() -> None:
     logger.info("Starting bot...")
 
