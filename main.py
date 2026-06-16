@@ -1088,7 +1088,7 @@ async def main() -> None:
     dp      = Dispatcher(storage=storage)
 
     async def on_startup() -> None:
-    await db_connect()
+     await db_connect()
     me = await bot.get_me()
     logger.info("Bot ready: @%s", me.username)
 
