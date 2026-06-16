@@ -1087,13 +1087,13 @@ async def main() -> None:
     storage = MongoStorage.from_url(MONGODB_URI)
     dp      = Dispatcher(storage=storage)
 
-    async def on_startup(_bot: Bot) -> None:
-        await db_connect()
-        me = await _bot.get_me()
-        logger.info("Bot ready: @%s", me.username)
+    async def on_startup() -> None:
+    await db_connect()
+    me = await bot.get_me()
+    logger.info("Bot ready: @%s", me.username)
 
-    async def on_shutdown(_bot: Bot) -> None:
-        await db_close()
+async def on_shutdown() -> None:
+    await db_close()
 
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
