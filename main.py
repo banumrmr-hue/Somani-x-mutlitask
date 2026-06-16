@@ -8,6 +8,23 @@ Requires: BOT_TOKEN and MONGODB_URI environment variables
 # ─────────────────────────────────────────────────────────────────────────────
 #  IMPORTS
 # ─────────────────────────────────────────────────────────────────────────────
+import os 
+os.system("pip install flask")
+from flask import Flask
+import threading
+import asyncio
+
+# 👇 Flask server (TOP PART)
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Bot is running"
+
+def run_web():
+    app.run(host="0.0.0.0", port=10000)
+
+threading.Thread(target=run_web).start()
 
 import ast
 import asyncio
@@ -68,8 +85,8 @@ logger = logging.getLogger(__name__)
 
 BOT_TOKEN       = os.environ.get("BOT_TOKEN", "").strip()
 MONGODB_URI     = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/telebot")
-OWNER_USERNAME  = os.environ.get("OWNER_USERNAME", "@aadarshpy")
-OWNER_CONTACT   = os.environ.get("OWNER_CONTACT",  "https://t.me/aadarshpy")
+OWNER_USERNAME  = os.environ.get("OWNER_USERNAME", "@somani_07x")
+OWNER_CONTACT   = os.environ.get("OWNER_CONTACT",  "https://t.me/somani_07x")
 BOT_VERSION     = os.environ.get("BOT_VERSION",    "2.0.0")
 MAX_FILE_SIZE   = int(os.environ.get("MAX_FILE_SIZE", str(5 * 1024 * 1024)))
 
