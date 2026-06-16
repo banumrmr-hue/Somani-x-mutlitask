@@ -8,12 +8,10 @@ Requires: BOT_TOKEN and MONGODB_URI environment variables
 # ─────────────────────────────────────────────────────────────────────────────
 #  IMPORTS
 # ─────────────────────────────────────────────────────────────────────────────
-import os
-os.system("pip install flask")
 from flask import Flask
 import threading
 
-app = Flask(name)
+app = Flask(__name__)
 
 @app.route("/")
 def home():
@@ -22,7 +20,8 @@ def home():
 def run_web():
     app.run(host="0.0.0.0", port=10000)
 
-threading.Thread(target=run_web).start()
+threading.Thread(target=run_web, daemon=True).start()
+
 import ast
 import asyncio
 import base64
