@@ -1082,26 +1082,37 @@ async def handle_mini_file(msg: Message, state: FSMContext) -> None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 async def main() -> None:
-    logger.info("Starting bot…")
-    bot     = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+async def main() -> None:
+    logger.info("Starting bot...")
+
+    bot = Bot(
+        token=BOT_TOKEN,
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+    )
+
     storage = MongoStorage.from_url(MONGODB_URI)
-    dp      = Dispatcher(storage=storage)
+    dp = Dispatcher(storage=storage)
 
     async def on_startup() -> None:
-     await db_connect()
-    me = await bot.get_me()
-    logger.info("Bot ready: @%s", me.username)
+        await db_connect()
+        me = await bot.get_me()
+        logger.info("Bot ready: @%s", me.username)
 
-async def on_shutdown() -> None:
-    await db_close()
+    async def on_shutdown() -> None:
+        await db_close()
 
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
+
     dp.include_router(router)
 
     logger.info("Polling started.")
+
     try:
-        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
+        await dp.start_polling(
+            bot,
+            allowed_updates=dp.resolve_used_update_types()
+        )
     finally:
         await bot.session.close()
 
